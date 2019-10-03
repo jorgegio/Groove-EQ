@@ -1,0 +1,37 @@
+body{
+    width: 300px;
+    height: 100px;
+    flex-direction: column;
+    align-items: center;
+    font-family: sans-serif;
+}
+
+#EqSliderList{
+  display: flex;
+  flex-direction: row;
+  width: 200px;
+  height: 100px;
+  user-select: none;
+  padding-bottom: 10%;
+}
+
+.band{
+  -webkit-appearance: slider-vertical;
+  height: 100px;
+  width: 20px;
+}
+
+.slider{
+  display: flex;
+  flex-direction: column;
+}
+
+.EqContainer{
+  display: grid;
+}
+
+.SlidersContainer, .GraphContainer{
+  grid-column: 1;
+  grid-row: 1;
+}
+

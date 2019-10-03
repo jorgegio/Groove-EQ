@@ -1,0 +1,81 @@
+<html>
+
+<head>
+  <title>Audio EQ</title>
+  <script src="content.js"></script>
+  <link rel="stylesheet" type="text/css" href="popup.css">
+
+</head>
+
+<body>
+  <div class="EqContainer">
+    <div class="SlidersContainer">
+      <div id="EqSliderList">
+        <div class="slider">
+          <input class="band" id="band1" type="range" min="-12" max="12" step="0.5" value="0">
+          <label class="bandLabel">30 </label>
+        </div>
+        <div class="slider">
+          <input class="band" id="band2" type="range" min="-12" max="12" step="0.5" value="0">
+          <label class="bandLabel">60 </label>
+        </div>
+        <div class="slider">
+          <input class="band" id="band3" type="range" min="-12" max="12" step="0.5" value="0">
+          <label class="bandLabel">90 </label>
+        </div>
+        <div class="slider">
+          <input class="band" id="band4" type="range" min="-12" max="12" step="0.5" value="0">
+          <label class="bandLabel">160 </label>
+        </div>
+        <div class="slider">
+          <input class="band" id="band5" type="range" min="-12" max="12" step="0.5" value="0">
+          <label class="bandLabel">300 </label>
+        </div>
+        <div class="slider">
+          <input class="band" id="band6" type="range" min="-12" max="12" step="0.5" value="0">
+          <label class="bandLabel">500 </label>
+        </div>
+        <div class="slider">
+          <input class="band" id="band7" type="range" min="-12" max="12" step="0.5" value="0">
+          <label class="bandLabel">900 </label>
+        </div>
+        <div class="slider">
+          <input class="band" id="band8" type="range" min="-12" max="12" step="0.5" value="0">
+          <label class="bandLabel">1.6k </label>
+        </div>
+        <div class="slider">
+          <input class="band" id="band9" type="range" min="-12" max="12" step="0.5" value="0">
+          <label class="bandLabel">3k </label>
+        </div>
+        <div class="slider">
+          <input class="band" id="band10" type="range" min="-12" max="12" step="0.5" value="0">
+          <label class="bandLabel">5k </label>
+        </div>
+        <div class="slider">
+          <input class="band" id="band11" type="range" min="-12" max="12" step="0.5" value="0">
+          <label class="bandLabel">9k </label>
+        </div>
+        <div class="slider">
+          <input class="band" id="band12" type="range" min="-12" max="12" step="0.5" value="0">
+          <label class="bandLabel">16k </label>
+        </div>
+      </div>
+    </div>
+    <div class="GraphContainer">
+    </div>
+  </div>
+
+  <button class="Button" id="reset">Reset</button>
+
+  <div class="monoswitch">
+      <input id="radio-a" type="radio" name="first-switch" checked="checked"/>
+      <label for="radio-a">Mono</label>
+      <input id="radio-b" type="radio" name="first-switch"/>
+      <label for="radio-b">Stereo</label>
+  </div>
+
+
+
+</body>
+
+</html>
