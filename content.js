@@ -1,19 +1,37 @@
 document.addEventListener('DOMContentLoaded', function () {
+  window.onload = function(){
+    chrome.runtime.sendMessage("getValues");
+  }
+
 
   var mono = false;
-  var eqBands = [0,0,0,0,0,0,0,0,0,0,0,0];
 
   function updateSliders(sliderValue, sliderId){
-    eqBands[parseInt(sliderId.substr(4),10)-1] = sliderValue;
-    console.log(eqBands);
+    chrome.runtime.sendMessage({type: sliderId, value: document.getElementById(sliderId).value});
   }
+
+  chrome.runtime.onMessage.addListener(function (element) {
+    if (element.type == "bandValues") {
+      console.log("Received from background: ", element.value);
+      for(i = 0; i< element.value.length; i++){
+        document.getElementById("band"+(i+1)).value=(element.value[i]);
+      }
+    }
+  });
 
 
   Array.from(document.getElementsByClassName('slider')).forEach(function(element) {
     //Call upon array update onclick  
-    element.addEventListener('click', function(e){updateSliders(e.target.value, e.target.id);});
+    element.addEventListener('click', function(e){
+      if(e.target.id){
+        updateSliders(e.target.value, e.target.id);
+      }
+    });
     //Reset sliders on double click
-    element.addEventListener('dblclick', function(e){e.target.value = 0;});
+    element.addEventListener('dblclick', function(e){
+      e.target.value = 0;
+      updateSliders(e.target.value, e.target.id);
+    });
   });
   
 
@@ -35,6 +53,4 @@ document.addEventListener('DOMContentLoaded', function () {
       console.log("Mono");
     } else console.log("Stereo");
   };
-
-
 }, false);
