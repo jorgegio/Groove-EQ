@@ -141,7 +141,9 @@ chrome.runtime.onMessage.addListener(function (element) {
   }
 
   if(element.type) {
-    eq[parseInt(element.type.substr(4),10)-1] = parseInt(element.value);
+    if(element.type.substr(0,4) == "band"){
+      eq[parseInt(element.type.substr(4),10)-1] = parseInt(element.value);
+    }
     if(cTabObj.stream){
       switch(element.type){
         case "band1":
@@ -180,13 +182,14 @@ chrome.runtime.onMessage.addListener(function (element) {
         case "band12":
             cTabObj.band12.gain.setValueAtTime(element.value, cTabObj.audioCtx.currentTime);
           break;
+        case "gain":
+            gain = element.value;
+            cTabObj.gainNode.gain.setValueAtTime(element.value, cTabObj.audioCtx.currentTime);
+          break;
+        case "mono":
+            mono = element.value;
+          break;
       }
     }
-  }
-  if(element.mono){
-    mono = element.value;
-  }
-  if(element.gain){
-    gain = element.value;
   }
 });

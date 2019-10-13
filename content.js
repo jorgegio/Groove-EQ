@@ -16,10 +16,10 @@ document.addEventListener('DOMContentLoaded', function () {
     } else {
       document.getElementById("radio-b").checked = true;
     }
-    chrome.runtime.sendMessage({mono: mono});
+    chrome.runtime.sendMessage({type: "mono", value: mono});
   }
   function updateGain(){
-    chrome.runtime.sendMessage({mono: gain});
+    chrome.runtime.sendMessage({type: "gain", value: gain});
   }
 
   chrome.runtime.onMessage.addListener(function (element) {
