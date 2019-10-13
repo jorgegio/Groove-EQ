@@ -1,6 +1,6 @@
 document.addEventListener('DOMContentLoaded', function () {
   window.onload = function(){
-    chrome.runtime.sendMessage("getValues");
+    chrome.runtime.sendMessage("popupOpened");
   }
 
 
@@ -16,17 +16,17 @@ document.addEventListener('DOMContentLoaded', function () {
     } else {
       document.getElementById("radio-b").checked = true;
     }
-    chrome.runtime.sendMessage({type: "mono", value: mono});
+    chrome.runtime.sendMessage({mono: mono});
   }
   function updateGain(){
-    chrome.runtime.sendMessage({type: "gain", value: gain});
+    chrome.runtime.sendMessage({mono: gain});
   }
 
   chrome.runtime.onMessage.addListener(function (element) {
     if (element.type == "bandValues") {
       console.log("Received from background: ", element.value);
-      for(i = 0; i< element.value.length; i++){
-        document.getElementById("band"+(i+1)).value=(element.value[i]);
+      for(i = 0; i<12; i++){
+        document.getElementById("band"+(i+1)).value = (element.value[i]);
       }
     }
     if(element.type == "monoValue"){

@@ -3,7 +3,7 @@
   "name": "Sound Equalizer",
   "version": "1.0",
   "description": "Tweak audio playback in your browser",
-  "permissions": ["storage","tabCapture","tabs","<all_urls>"],
+  "permissions": ["storage","activeTab","tabCapture","tabs","<all_urls>"],
   "content_scripts":[
     {
       "matches": [
