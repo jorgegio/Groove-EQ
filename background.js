@@ -1,4 +1,5 @@
 var eq = [0,0,0,0,0,0,0,0,0,0,0,0];
+var frequencies = [30,60,90,160,300,500,900,1600,3000,5000,9000,16000]
 var cTabObj = {};
 var mono = false;
 var gain = 1;
@@ -7,50 +8,40 @@ var gain = 1;
 initBandBiquads = function () {
   cTabObj.audioCtx.latencyHint = "playback";
   cTabObj.band1.type = "lowshelf";
-  cTabObj.band1.frequency.setValueAtTime(30, cTabObj.audioCtx.currentTime);
+  cTabObj.band1.frequency.setValueAtTime(frequencies[0], cTabObj.audioCtx.currentTime);
   cTabObj.band2.type = "peaking";
-  cTabObj.band2.frequency.setValueAtTime(60, cTabObj.audioCtx.currentTime);
-  //cTabObj.band2.Q.setValueAtTime(5, cTabObj.audioCtx.currentTime);
+  cTabObj.band2.frequency.setValueAtTime(frequencies[1], cTabObj.audioCtx.currentTime);
   cTabObj.band3.type = "peaking";
-  cTabObj.band3.frequency.setValueAtTime(90, cTabObj.audioCtx.currentTime);
-  //cTabObj.band3.Q.setValueAtTime(5, cTabObj.audioCtx.currentTime);
+  cTabObj.band3.frequency.setValueAtTime(frequencies[2], cTabObj.audioCtx.currentTime);
   cTabObj.band4.type = "peaking";
-  cTabObj.band4.frequency.setValueAtTime(160, cTabObj.audioCtx.currentTime);
-  //cTabObj.band4.Q.setValueAtTime(5, cTabObj.audioCtx.currentTime);
+  cTabObj.band4.frequency.setValueAtTime(frequencies[3], cTabObj.audioCtx.currentTime);
   cTabObj.band5.type = "peaking";
-  cTabObj.band5.frequency.setValueAtTime(300, cTabObj.audioCtx.currentTime);
-  //cTabObj.band5.Q.setValueAtTime(5, cTabObj.audioCtx.currentTime);
+  cTabObj.band5.frequency.setValueAtTime(frequencies[4], cTabObj.audioCtx.currentTime);
   cTabObj.band6.type = "peaking";
-  cTabObj.band6.frequency.setValueAtTime(500, cTabObj.audioCtx.currentTime);
-  //cTabObj.band6.Q.setValueAtTime(5, cTabObj.audioCtx.currentTime);
+  cTabObj.band6.frequency.setValueAtTime(frequencies[5], cTabObj.audioCtx.currentTime);
   cTabObj.band7.type = "peaking";
-  cTabObj.band7.frequency.setValueAtTime(900, cTabObj.audioCtx.currentTime);
-  //cTabObj.band7.Q.setValueAtTime(5, cTabObj.audioCtx.currentTime);
+  cTabObj.band7.frequency.setValueAtTime(frequencies[6], cTabObj.audioCtx.currentTime);
   cTabObj.band8.type = "peaking";
-  cTabObj.band8.frequency.setValueAtTime(1600, cTabObj.audioCtx.currentTime);
-  //cTabObj.band8.Q.setValueAtTime(5, cTabObj.audioCtx.currentTime);
+  cTabObj.band8.frequency.setValueAtTime(frequencies[7], cTabObj.audioCtx.currentTime);
   cTabObj.band9.type = "peaking";
-  cTabObj.band9.frequency.setValueAtTime(3000, cTabObj.audioCtx.currentTime);
-  //cTabObj.band9.Q.setValueAtTime(5, cTabObj.audioCtx.currentTime);
+  cTabObj.band9.frequency.setValueAtTime(frequencies[8], cTabObj.audioCtx.currentTime);
   cTabObj.band10.type = "peaking";
-  cTabObj.band10.frequency.setValueAtTime(5000, cTabObj.audioCtx.currentTime);
-  //cTabObj.band10.Q.setValueAtTime(5, cTabObj.audioCtx.currentTime);
+  cTabObj.band10.frequency.setValueAtTime(frequencies[9], cTabObj.audioCtx.currentTime);
   cTabObj.band11.type = "peaking";
-  cTabObj.band11.frequency.setValueAtTime(9000, cTabObj.audioCtx.currentTime);
-  //cTabObj.band11.Q.setValueAtTime(5, cTabObj.audioCtx.currentTime);
+  cTabObj.band11.frequency.setValueAtTime(frequencies[10], cTabObj.audioCtx.currentTime);
   cTabObj.band12.type = "highshelf";
-  cTabObj.band12.frequency.setValueAtTime(16000, cTabObj.audioCtx.currentTime);
+  cTabObj.band12.frequency.setValueAtTime(frequencies[11], cTabObj.audioCtx.currentTime);
   cTabObj.gainNode.gain.setValueAtTime(1, cTabObj.audioCtx.currentTime);
 }
 
 getTabStream = function () {
   //Close audiostream if it already exists
-  //Gets audiostream from tab
   if (cTabObj.stream) {
     cTabObj.stream.getAudioTracks()[0].stop();
     cTabObj.audioCtx.close();
     cTabObj = {};
   }
+  //Gets audiostream from tab
   chrome.tabCapture.capture({audio: true, video: false}, (c) => {
     if (chrome.runtime.lastError) {}
     if(c){
@@ -121,8 +112,6 @@ closeAudio = function () {
     location.reload();
   }
 }
-
-
 
 chrome.runtime.onMessage.addListener(function (element) {
   if(element == "popupOpened"){
