@@ -10,34 +10,34 @@ initBandBiquads = function () {
   cTabObj.band1.frequency.setValueAtTime(30, cTabObj.audioCtx.currentTime);
   cTabObj.band2.type = "peaking";
   cTabObj.band2.frequency.setValueAtTime(60, cTabObj.audioCtx.currentTime);
-  cTabObj.band2.Q.setValueAtTime(5, cTabObj.audioCtx.currentTime);
+  //cTabObj.band2.Q.setValueAtTime(5, cTabObj.audioCtx.currentTime);
   cTabObj.band3.type = "peaking";
   cTabObj.band3.frequency.setValueAtTime(90, cTabObj.audioCtx.currentTime);
-  cTabObj.band3.Q.setValueAtTime(5, cTabObj.audioCtx.currentTime);
+  //cTabObj.band3.Q.setValueAtTime(5, cTabObj.audioCtx.currentTime);
   cTabObj.band4.type = "peaking";
   cTabObj.band4.frequency.setValueAtTime(160, cTabObj.audioCtx.currentTime);
-  cTabObj.band4.Q.setValueAtTime(5, cTabObj.audioCtx.currentTime);
+  //cTabObj.band4.Q.setValueAtTime(5, cTabObj.audioCtx.currentTime);
   cTabObj.band5.type = "peaking";
   cTabObj.band5.frequency.setValueAtTime(300, cTabObj.audioCtx.currentTime);
-  cTabObj.band5.Q.setValueAtTime(5, cTabObj.audioCtx.currentTime);
+  //cTabObj.band5.Q.setValueAtTime(5, cTabObj.audioCtx.currentTime);
   cTabObj.band6.type = "peaking";
   cTabObj.band6.frequency.setValueAtTime(500, cTabObj.audioCtx.currentTime);
-  cTabObj.band6.Q.setValueAtTime(5, cTabObj.audioCtx.currentTime);
+  //cTabObj.band6.Q.setValueAtTime(5, cTabObj.audioCtx.currentTime);
   cTabObj.band7.type = "peaking";
   cTabObj.band7.frequency.setValueAtTime(900, cTabObj.audioCtx.currentTime);
-  cTabObj.band7.Q.setValueAtTime(5, cTabObj.audioCtx.currentTime);
+  //cTabObj.band7.Q.setValueAtTime(5, cTabObj.audioCtx.currentTime);
   cTabObj.band8.type = "peaking";
   cTabObj.band8.frequency.setValueAtTime(1600, cTabObj.audioCtx.currentTime);
-  cTabObj.band8.Q.setValueAtTime(5, cTabObj.audioCtx.currentTime);
+  //cTabObj.band8.Q.setValueAtTime(5, cTabObj.audioCtx.currentTime);
   cTabObj.band9.type = "peaking";
   cTabObj.band9.frequency.setValueAtTime(3000, cTabObj.audioCtx.currentTime);
-  cTabObj.band9.Q.setValueAtTime(5, cTabObj.audioCtx.currentTime);
+  //cTabObj.band9.Q.setValueAtTime(5, cTabObj.audioCtx.currentTime);
   cTabObj.band10.type = "peaking";
   cTabObj.band10.frequency.setValueAtTime(5000, cTabObj.audioCtx.currentTime);
-  cTabObj.band10.Q.setValueAtTime(5, cTabObj.audioCtx.currentTime);
+  //cTabObj.band10.Q.setValueAtTime(5, cTabObj.audioCtx.currentTime);
   cTabObj.band11.type = "peaking";
   cTabObj.band11.frequency.setValueAtTime(9000, cTabObj.audioCtx.currentTime);
-  cTabObj.band11.Q.setValueAtTime(5, cTabObj.audioCtx.currentTime);
+  //cTabObj.band11.Q.setValueAtTime(5, cTabObj.audioCtx.currentTime);
   cTabObj.band12.type = "highshelf";
   cTabObj.band12.frequency.setValueAtTime(16000, cTabObj.audioCtx.currentTime);
   cTabObj.gainNode.gain.setValueAtTime(1, cTabObj.audioCtx.currentTime);
@@ -113,17 +113,75 @@ connect = function () {
   cTabObj.gainNode.connect(cTabObj.audioCtx.destination);
 };
 
+closeAudio = function () {
+  if (cTabObj.stream) {
+    cTabObj.stream.getAudioTracks()[0].stop();
+    cTabObj.audioCtx.close();
+    cTabObj = {};
+    location.reload();
+  }
+}
+
 
 
 chrome.runtime.onMessage.addListener(function (element) {
-  getTabStream();
-  if (element == "popupOpened"){
+  if(element == "popupOpened"){
+    getTabStream();
     chrome.runtime.sendMessage({type: "bandValues", value: eq});
     chrome.runtime.sendMessage({type: "monoValue", value: mono});
     chrome.runtime.sendMessage({type: "gainValue", value: gain});
   }
+  else if(!cTabObj.stream && element !== "reset"){
+    getTabStream();
+  }
+  if(element == "reset"){
+    if(cTabObj.stream){
+      closeAudio();
+    }
+  }
+
   if(element.type) {
     eq[parseInt(element.type.substr(4),10)-1] = parseInt(element.value);
+    if(cTabObj.stream){
+      switch(element.type){
+        case "band1":
+            cTabObj.band1.gain.setValueAtTime(element.value, cTabObj.audioCtx.currentTime);
+          break;
+        case "band2":
+            cTabObj.band2.gain.setValueAtTime(element.value, cTabObj.audioCtx.currentTime);
+          break;
+        case "band3":
+            cTabObj.band3.gain.setValueAtTime(element.value, cTabObj.audioCtx.currentTime);
+          break;
+        case "band4":
+            cTabObj.band4.gain.setValueAtTime(element.value, cTabObj.audioCtx.currentTime);
+          break;
+        case "band5":
+            cTabObj.band5.gain.setValueAtTime(element.value, cTabObj.audioCtx.currentTime);
+          break;
+        case "band6":
+            cTabObj.band6.gain.setValueAtTime(element.value, cTabObj.audioCtx.currentTime);
+          break;
+        case "band7":
+            cTabObj.band7.gain.setValueAtTime(element.value, cTabObj.audioCtx.currentTime);
+          break;
+        case "band8":
+            cTabObj.band8.gain.setValueAtTime(element.value, cTabObj.audioCtx.currentTime);
+          break;
+        case "band9":
+            cTabObj.band9.gain.setValueAtTime(element.value, cTabObj.audioCtx.currentTime);
+          break;
+        case "band10":
+            cTabObj.band10.gain.setValueAtTime(element.value, cTabObj.audioCtx.currentTime);
+          break;
+        case "band11":
+            cTabObj.band11.gain.setValueAtTime(element.value, cTabObj.audioCtx.currentTime);
+          break;
+        case "band12":
+            cTabObj.band12.gain.setValueAtTime(element.value, cTabObj.audioCtx.currentTime);
+          break;
+      }
+    }
   }
   if(element.mono){
     mono = element.value;

@@ -5,7 +5,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
 
   var mono = false;
-  var gain = 0;
+  var gain = 1;
 
   function updateSliders(sliderValue, sliderId){
     chrome.runtime.sendMessage({type: sliderId, value: document.getElementById(sliderId).value});
@@ -67,6 +67,7 @@ document.addEventListener('DOMContentLoaded', function () {
     });
     mono = false;
     updateMono();
+    chrome.runtime.sendMessage("reset");
     console.log("RESET!");
   };
   
