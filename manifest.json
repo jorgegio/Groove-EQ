@@ -1,8 +1,8 @@
 {
   "manifest_version": 2,
   "name": "Sound Equalizer",
-  "version": "1.0",
-  "description": "Tweak audio playback in your browser",
+  "version": "0.1",
+  "description": "Equalize audio within your browser!",
   "permissions": ["storage","activeTab","tabCapture","tabs","<all_urls>"],
   "content_scripts":[
     {
