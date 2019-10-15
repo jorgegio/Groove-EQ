@@ -1,12 +1,18 @@
 body{
-    width: 300px;
+    width: 350px;
     height: 100px;
     flex-direction: column;
     align-items: center;
     font-family: sans-serif;
 }
 
-#EqSliderList{
+.GainSlider{
+  display: flex;
+  flex-direction: column;
+  padding-right: 5px;
+}
+
+.EqSliderList{
   display: flex;
   flex-direction: row;
   width: 200px;
@@ -14,6 +20,7 @@ body{
   user-select: none;
   padding-bottom: 10%;
 }
+
 
 .band{
   -webkit-appearance: slider-vertical;
