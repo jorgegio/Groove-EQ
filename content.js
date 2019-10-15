@@ -6,7 +6,7 @@ document.addEventListener('DOMContentLoaded', function () {
   var mono = false;
 
   function updateSliders(sliderValue, sliderId){
-    chrome.runtime.sendMessage({type: sliderId, value: document.getElementById(sliderId).value});
+    chrome.runtime.sendMessage({type: sliderId, value: sliderValue});
   }
   function updateMono(){
     if(mono){
@@ -22,13 +22,11 @@ document.addEventListener('DOMContentLoaded', function () {
 
   chrome.runtime.onMessage.addListener(function (element) {
     if (element.type == "bandValues") {
-      console.log("Received from background: ", element.value);
       for(i = 0; i<12; i++){
         document.getElementById("band"+(i+1)).value = (element.value[i]);
       }
     }
     if(element.type == "monoValue"){
-      console.log("Entered mono check");
       mono = element.value;
       if(mono){
         document.getElementById("radio-a").checked = true;
@@ -44,7 +42,7 @@ document.addEventListener('DOMContentLoaded', function () {
   document.getElementById('gain').addEventListener('click',function(e){updateGain(e.value,e.id)})
 
   Array.from(document.getElementsByClassName('slider')).forEach(function(element) {
-    //Call upon array update onclick  
+    //Call upon slider update onclick  
     element.addEventListener('click', function(e){
       if(element.id !='gain'){
         if(e.target.id){
@@ -63,7 +61,6 @@ document.addEventListener('DOMContentLoaded', function () {
       }
     });
   });
-  
 
   //Reset band sliders
   document.getElementById('reset').onclick = function () {
