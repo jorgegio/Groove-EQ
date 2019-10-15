@@ -62,6 +62,7 @@ getTabStream = function () {
       cTabObj.band12.gain.setValueAtTime(eq[11], cTabObj.audioCtx.currentTime);
       cTabObj.gainNode.gain.setValueAtTime(gain, cTabObj.audioCtx.currentTime);
       connect();
+      monoConnect();
     }
   })
 }
@@ -84,6 +85,9 @@ createAudio = function (a) {
   cTabObj.band10 = cTabObj.audioCtx.createBiquadFilter();
   cTabObj.band11 = cTabObj.audioCtx.createBiquadFilter();
   cTabObj.band12 = cTabObj.audioCtx.createBiquadFilter();
+  cTabObj.monoSplitter = cTabObj.audioCtx.createChannelSplitter(2);
+  cTabObj.monoGain = cTabObj.audioCtx.createGain();
+  cTabObj.monoMerger = cTabObj.audioCtx.createChannelMerger(2);
 };
 
 //Connects biquads to output stream
@@ -103,6 +107,20 @@ connect = function () {
   cTabObj.band12.connect(cTabObj.gainNode);
   cTabObj.gainNode.connect(cTabObj.audioCtx.destination);
 };
+
+monoConnect = function () {
+  if (mono) {
+      cTabObj.band12.disconnect();
+      cTabObj.band12.connect(cTabObj.monoSplitter);
+      cTabObj.monoSplitter.connect(cTabObj.monoMerger, 0, 1);
+      cTabObj.monoSplitter.connect(cTabObj.monoMerger, 0, 0);
+      cTabObj.monoSplitter.connect(cTabObj.monoMerger, 1, 0);
+      cTabObj.monoMerger.connect(cTabObj.gainNode);
+  } else {
+    cTabObj.band12.disconnect();
+    cTabObj.band12.connect(cTabObj.gainNode);
+  }
+}
 
 closeAudio = function () {
   if (cTabObj.stream) {
@@ -176,7 +194,8 @@ chrome.runtime.onMessage.addListener(function (element) {
             cTabObj.gainNode.gain.setValueAtTime(element.value, cTabObj.audioCtx.currentTime);
           break;
         case "mono":
-            mono = element.value;
+          mono = element.value;
+          monoConnect();
           break;
       }
     }
