@@ -1,25 +1,31 @@
 body{
-    width: 350px;
+    width: 360px;
     height: 100px;
     flex-direction: column;
     align-items: center;
     font-family: sans-serif;
-    background-color: #16a085;
+    background-color: #4b6584;
 }
 
 .EqSliderList{
   display: flex;
   flex-direction: row;
-  width: 200px;
+  width: 300px;
   height: 100px;
   user-select: none;
-  padding-bottom: 10%;
+  padding-right: 5%;
+  padding-bottom: 7%;
 }
 
 .band{
   -webkit-appearance: slider-vertical;
   height: 100px;
-  width: 20px;
+  width: 21px;
+  border-radius: 3px;
+}
+ 
+#gainSlider{
+  padding-right: 10px;
 }
 
 .bandLabel{
@@ -34,7 +40,7 @@ body{
 .EqContainer{
   display: grid;
   padding: 5px;
-  background-color: #1abc9c;
+  background-color: #778ca3;
   border-radius: 5px;
 }
 
@@ -43,12 +49,8 @@ body{
   display: flex;
   flex-direction: row;
   justify-content: space-between;
-  align-items: right;
   color: #ecf0f1;
+  padding: 5px;
+  background-color: #778ca3;
+  border-radius: 5px;
 }
-
-.SlidersContainer, .GraphContainer{
-  grid-column: 1;
-  grid-row: 1;
-}
-
