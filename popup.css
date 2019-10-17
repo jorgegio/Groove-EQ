@@ -1,11 +1,11 @@
-@import url('https://fonts.googleapis.com/css?family=Montserrat:300,400');
+@import url('https://fonts.googleapis.com/css?family=Roboto');
 
 body{
   width: 480px;
   height: 100px;
   flex-direction: column;
   align-items: center;
-  --font-primary: "Montserrat", sans-serif;
+  font-family: "Roboto", sans-serif;
   background-color: #34515e;
 }
 
@@ -97,17 +97,67 @@ border-radius: 5px;
 
 .settingsContainer{
 margin: 5px;
+padding: 5px;
 display: flex;
 flex-direction: row;
 justify-content: space-between;
 color: #ecf0f1;
-padding: 5px;
 background-color: #607d8b;
 border-radius: 5px;
 }
 
+[type="radio"] {
+    -webkit-appearance: none;
+    vertical-align: middle;
+    display: inline-block;
+}
+[type="radio"]:checked + label,
+[type="radio"]:not(:checked) + label
+{
+    position: relative;
+    padding-left: 28px;
+    cursor: pointer;
+    line-height: 20px;
+    display: inline-block;
+}
+[type="radio"]:checked + label:before,
+[type="radio"]:not(:checked) + label:before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 18px;
+    height: 18px;
+    border: 1px solid #ddd;
+    border-radius: 100%;
+    background: #fff;
+}
+[type="radio"]:checked + label:after,
+[type="radio"]:not(:checked) + label:after {
+    content: '';
+    width: 12px;
+    height: 12px;
+    background: #232323;
+    position: absolute;
+    top: 4px;
+    left: 4px;
+    border-radius: 100%;
+    -webkit-transition: all 0.2s ease;
+    transition: all 0.2s ease;
+}
+[type="radio"]:not(:checked) + label:after {
+    opacity: 0;
+    -webkit-transform: scale(0);
+    transform: scale(0);
+}
+[type="radio"]:checked + label:after {
+    opacity: 1;
+    -webkit-transform: scale(1);
+    transform: scale(1);
+}
+
 .resetBtn{
-  color: #fff !important;
+  color: #fff;
   background: #434343;
   padding: 5px;
   display: inline-block;
