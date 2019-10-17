@@ -35,6 +35,11 @@ margin-right: 10px;
   background: #ffd54f;
 }
 
+#gainSlider input[type=range]::-webkit-slider-thumb:hover{
+  background: #FFCE30;
+  transition: all 0.2s ease;
+}
+
 .bandLabel{
 color: #ffffff;
 }
@@ -88,6 +93,11 @@ cursor: pointer;
 margin-top: -5px;
 }
 
+input[type=range]::-webkit-slider-thumb:hover {
+  background-color: #EB617C;
+  transition: all 0.2s ease;
+}
+
 .EqContainer{
 display: grid;
 padding: 5px;
@@ -104,6 +114,116 @@ justify-content: space-between;
 color: #ecf0f1;
 background-color: #607d8b;
 border-radius: 5px;
+}
+
+.onoff-toggle {
+  position: relative;
+}
+.onoff-toggle *, .onoff-toggle *:before, .onoff-toggle *:after {
+  box-sizing: border-box;
+}
+.onoff-toggle input[type="checkbox"] {
+  opacity: 0;
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+.onoff-toggle input[type="checkbox"][disabled] ~ label {
+  pointer-events: none;
+}
+.onoff-toggle input[type="checkbox"][disabled] ~ label .onoff-toggle__switch {
+  opacity: 0.4;
+}
+.onoff-toggle input[type="checkbox"]:checked ~ label .onoff-toggle__switch:before {
+  content: attr(data-unchecked);
+  left: 0;
+}
+.onoff-toggle input[type="checkbox"]:checked ~ label .onoff-toggle__switch:after {
+  content: attr(data-checked);
+}
+.onoff-toggle label {
+  -webkit-user-select: none;
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+.onoff-toggle label .onoff-toggle__label-text {
+  flex: 1;
+  padding-left: 32px;
+}
+.onoff-toggle label .onoff-toggle__switch {
+  position: relative;
+}
+.onoff-toggle label .onoff-toggle__switch:before {
+  content: attr(data-checked);
+  position: absolute;
+  top: 0;
+  text-align: center;
+}
+.onoff-toggle label .onoff-toggle__switch:after {
+  content: attr(data-unchecked);
+  position: absolute;
+  z-index: 5;
+  text-align: center;
+  background: white;
+  transform: translate3d(0, 0, 0);
+}
+
+.onoff-toggle input[type="checkbox"]:checked ~ label:hover {
+  color: #F06292;
+}
+.onoff-toggle input[type="checkbox"]:checked ~ label .onoff-toggle__switch {
+  background-color: #F06292;
+}
+.onoff-toggle input[type="checkbox"]:checked ~ label .onoff-toggle__switch:after {
+  color: #EA526F;
+}
+.onoff-toggle input[type="checkbox"]:checked:focus ~ label .onoff-toggle__switch, .onoff-toggle input[type="checkbox"]:checked:hover ~ label .onoff-toggle__switch {
+  background-color: #F06292;
+}
+.onoff-toggle input[type="checkbox"]:checked:focus ~ label .onoff-toggle__switch:after, .onoff-toggle input[type="checkbox"]:checked:hover ~ label .onoff-toggle__switch:after {
+  color: #F06292;
+}
+
+.onoff-toggle label .onoff-toggle__switch {
+  transition: background-color 0.3s cubic-bezier(0, 1, 0.5, 1);
+  background: #434343;
+}
+.onoff-toggle label .onoff-toggle__switch:before {
+  color: rgba(255, 255, 255, 1);
+}
+.onoff-toggle label .onoff-toggle__switch:after {
+  transition: transform 0.5s cubic-bezier(0, 1, 0.5, 1);
+  color: #434343;
+}
+.onoff-toggle input[type="checkbox"]:focus ~ label .onoff-toggle__switch:after, .onoff-toggle input[type="checkbox"]:hover ~ label .onoff-toggle__switch:after {
+  box-shadow: 0 3px 3px rgba(0, 0, 0, 0.4);
+}
+.onoff-toggle input[type="checkbox"]:checked ~ label .onoff-toggle__switch:after {
+  transform: translate3d(50px, 0, 0);
+}
+.onoff-toggle label {
+  font-size: 14px;
+}
+.onoff-toggle label .onoff-toggle__switch {
+  height: 26px;
+  flex: 0 0 110px;
+  border-radius: 6px;
+}
+.onoff-toggle label .onoff-toggle__switch:before {
+  left: 57px;
+  font-size: 12px;
+  line-height: 26px;
+  width: 57px;
+  padding: 0 12px;
+}
+.onoff-toggle label .onoff-toggle__switch:after {
+  top: 2px;
+  left: 2px;
+  border-radius: 5px;
+  width: 55px;
+  line-height: 22px;
+  font-size: 12px;
 }
 
 [type="radio"] {
@@ -128,21 +248,20 @@ border-radius: 5px;
     top: 0;
     width: 18px;
     height: 18px;
-    border: 1px solid #ddd;
+    border: 1px solid #434343;
     border-radius: 100%;
-    background: #fff;
+    background: #434343;
 }
 [type="radio"]:checked + label:after,
 [type="radio"]:not(:checked) + label:after {
     content: '';
     width: 12px;
     height: 12px;
-    background: #434343;
+    background: #fff;
     position: absolute;
     top: 4px;
     left: 4px;
     border-radius: 100%;
-    -webkit-transition: all 0.2s ease;
     transition: all 0.2s ease;
 }
 [type="radio"]:not(:checked) + label:after {
@@ -159,15 +278,15 @@ border-radius: 5px;
 .resetBtn{
   color: #fff;
   background: #434343;
-  padding: 5px;
+  padding-right: 10px;
+  padding-left: 10px;
   display: inline-block;
   border: none;
   transition: all 0.4s ease 0s;
-  border-radius: 3px;
+  border-radius: 5px;
 }
 
 .resetBtn:hover {
   background: #232323;
-  letter-spacing: 1px;
   transition: all 0.4s ease 0s;
   }
