@@ -1,6 +1,7 @@
 var eq = [0,0,0,0,0,0,0,0,0,0,0,0];
 var frequencies = [50,100,200,400,600,700,900,1600,3000,5000,9000,16000]
 var cTabObj = {};
+var power = true;
 var mono = false;
 var gain = 1;
 
@@ -36,11 +37,7 @@ initBandBiquads = function () {
 
 getTabStream = function () {
   //Close audiostream if it already exists
-  if (cTabObj.stream) {
-    cTabObj.stream.getAudioTracks()[0].stop();
-    cTabObj.audioCtx.close();
-    cTabObj = {};
-  }
+  closeAudio();
   //Gets audiostream from tab
   chrome.tabCapture.capture({audio: true, video: false}, (c) => {
     if (chrome.runtime.lastError) {}
@@ -127,30 +124,29 @@ closeAudio = function () {
     cTabObj.stream.getAudioTracks()[0].stop();
     cTabObj.audioCtx.close();
     cTabObj = {};
-    location.reload();
   }
 }
 
 chrome.runtime.onMessage.addListener(function (element) {
   if(element == "popupOpened"){
-    getTabStream();
     chrome.runtime.sendMessage({type: "bandValues", value: eq});
     chrome.runtime.sendMessage({type: "monoValue", value: mono});
     chrome.runtime.sendMessage({type: "gainValue", value: gain});
-  }
-  else if(!cTabObj.stream && element !== "reset"){
-    getTabStream();
+    chrome.runtime.sendMessage({type: "powerValue", value: power});
   }
   if(element == "reset"){
     if(cTabObj.stream){
       closeAudio();
     }
   }
-
   if(element.type) {
     if(element.type.substr(0,4) == "band"){
       eq[parseInt(element.type.substr(4),10)-1] = parseInt(element.value);
     }
+    if(element.type == "power"){
+      power = element.value;
+    }
+    (power)?getTabStream():closeAudio();
     if(cTabObj.stream){
       switch(element.type){
         case "band1":

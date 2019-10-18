@@ -5,10 +5,10 @@ document.addEventListener('DOMContentLoaded', function () {
 
   var mono = false;
 
-  function updateSliders(sliderValue, sliderId){
+  updateSliders = function(sliderValue, sliderId){
     chrome.runtime.sendMessage({type: sliderId, value: sliderValue});
   }
-  function updateMono(){
+  updateMono = function(){
     if(mono){
       document.getElementById("radio-a").checked = true;
     } else {
@@ -16,8 +16,11 @@ document.addEventListener('DOMContentLoaded', function () {
     }
     chrome.runtime.sendMessage({type: "mono", value: mono});
   }
-  function updateGain(){
-    chrome.runtime.sendMessage({type: "gain", value: document.getElementById('gain').value});
+  updateGain = function(gainValue){
+    chrome.runtime.sendMessage({type: "gain", value: gainValue});
+  }
+  updatePower = function(powerValue){
+    chrome.runtime.sendMessage({type: "power", value: powerValue});
   }
 
   chrome.runtime.onMessage.addListener(function (element) {
@@ -37,9 +40,17 @@ document.addEventListener('DOMContentLoaded', function () {
     if(element.type == "gainValue"){
       document.getElementById('gain').value = element.value;
     }
+    if(element.type == "powerValue"){
+      document.getElementById('onOff').checked = element.value;
+    }
   });
 
-  document.getElementById('gain').addEventListener('click',function(e){updateGain(e.value,e.id)})
+  document.getElementById('gain').addEventListener('click',function(e){
+    updateGain(e.target.value);
+  });
+  document.getElementById('onOff').addEventListener('click',function(e){
+    updatePower(e.target.checked);
+  })
 
   Array.from(document.getElementsByClassName('slider')).forEach(function(element) {
     //Call upon slider update onclick  
@@ -70,10 +81,11 @@ document.addEventListener('DOMContentLoaded', function () {
     });
     mono = false;
     document.getElementById('gain').value = 1;
-    updateGain();
+    updateGain(1);
     updateMono();
+    document.getElementById('onOff').checked = true;
+    updatePower(true);
     chrome.runtime.sendMessage("reset");
-    console.log("RESET!");
   };
   
   //Mono toggle
@@ -85,10 +97,4 @@ document.addEventListener('DOMContentLoaded', function () {
     mono = false;
     updateMono();
   }
-  
-  document.getElementById('mono').onclick = function () {
-    if(mono){
-      console.log("Mono");
-    } else console.log("Stereo");
-  };
 }, false);
