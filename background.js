@@ -146,7 +146,6 @@ chrome.runtime.onMessage.addListener(function (element) {
       power = element.value;
       (power)?getTabStream():closeAudio();
     }
-    console.log("Gain in background: ", gain);
     if(cTabObj.stream){
       switch(element.type){
         case "band1":
@@ -187,7 +186,6 @@ chrome.runtime.onMessage.addListener(function (element) {
           break;
         case "gain":        
             gain = element.value;
-            console.log("Received gain from content: ", gain);
             cTabObj.gainNode.gain.setValueAtTime(element.value, cTabObj.audioCtx.currentTime);
             break;
         case "mono":

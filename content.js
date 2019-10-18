@@ -16,11 +16,9 @@ document.addEventListener('DOMContentLoaded', function () {
     } else {
       document.getElementById("radio-b").checked = true;
     }
-    console.log("Sending mono to background: ", mono);
     chrome.runtime.sendMessage({type: "mono", value: mono});
   }
   updateGain = function(gainValue){
-    console.log("Sending gain to background: ", gainValue)
     chrome.runtime.sendMessage({type: "gain", value: gainValue});
   }
   updatePower = function(powerValue){
