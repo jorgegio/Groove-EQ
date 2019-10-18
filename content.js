@@ -15,9 +15,11 @@ document.addEventListener('DOMContentLoaded', function () {
     } else {
       document.getElementById("radio-b").checked = true;
     }
+    console.log("Sending mono to background: ", mono);
     chrome.runtime.sendMessage({type: "mono", value: mono});
   }
   updateGain = function(gainValue){
+    console.log("Sending gain to background: ", gainValue)
     chrome.runtime.sendMessage({type: "gain", value: gainValue});
   }
   updatePower = function(powerValue){
@@ -64,7 +66,7 @@ document.addEventListener('DOMContentLoaded', function () {
         if(e.target.id){
           updateSliders(e.target.value, e.target.id);
         }
-      } else updateGain();
+      } else updateGain(e.target.value);
     });
     //Reset sliders on double click
     element.addEventListener('dblclick', function(e){
@@ -73,7 +75,7 @@ document.addEventListener('DOMContentLoaded', function () {
         updateSliders(e.target.value, e.target.id);
       } else {
         e.target.value = 1;
-        updateGain();
+        updateGain(e.target.value);
       }
     });
   });

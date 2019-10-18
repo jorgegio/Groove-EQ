@@ -129,15 +129,14 @@ closeAudio = function () {
 
 chrome.runtime.onMessage.addListener(function (element) {
   if(element == "popupOpened"){
+    (power)?getTabStream():closeAudio();
     chrome.runtime.sendMessage({type: "bandValues", value: eq});
     chrome.runtime.sendMessage({type: "monoValue", value: mono});
     chrome.runtime.sendMessage({type: "gainValue", value: gain});
     chrome.runtime.sendMessage({type: "powerValue", value: power});
   }
   if(element == "reset"){
-    if(cTabObj.stream){
       closeAudio();
-    }
   }
   if(element.type) {
     if(element.type.substr(0,4) == "band"){
@@ -145,8 +144,9 @@ chrome.runtime.onMessage.addListener(function (element) {
     }
     if(element.type == "power"){
       power = element.value;
+      (power)?getTabStream():closeAudio();
     }
-    (power)?getTabStream():closeAudio();
+    console.log("Gain in background: ", gain);
     if(cTabObj.stream){
       switch(element.type){
         case "band1":
@@ -185,13 +185,14 @@ chrome.runtime.onMessage.addListener(function (element) {
         case "band12":
             cTabObj.band12.gain.setValueAtTime(element.value, cTabObj.audioCtx.currentTime);
           break;
-        case "gain":
+        case "gain":        
             gain = element.value;
+            console.log("Received gain from content: ", gain);
             cTabObj.gainNode.gain.setValueAtTime(element.value, cTabObj.audioCtx.currentTime);
-          break;
+            break;
         case "mono":
-          mono = element.value;
-          monoConnect();
+            mono = element.value;
+            monoConnect();
           break;
       }
     }
