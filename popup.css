@@ -142,7 +142,7 @@ border-radius: 5px;
   content: attr(data-checked);
 }
 .onoff-toggle label {
-  -webkit-user-select: none;
+  user-select: none;
   position: relative;
   display: flex;
   align-items: center;
@@ -230,10 +230,11 @@ border-radius: 5px;
     -webkit-appearance: none;
     vertical-align: middle;
     display: inline-block;
-}
-[type="radio"]:checked + label,
-[type="radio"]:not(:checked) + label
-{
+  }
+  [type="radio"]:checked + label,
+  [type="radio"]:not(:checked) + label
+  {
+    user-select: none;
     position: relative;
     padding-left: 28px;
     cursor: pointer;
@@ -278,6 +279,7 @@ border-radius: 5px;
 .resetBtn{
   color: #fff;
   background: #434343;
+  user-select: none;
   padding-right: 10px;
   padding-left: 10px;
   display: inline-block;

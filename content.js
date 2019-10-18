@@ -3,6 +3,7 @@ document.addEventListener('DOMContentLoaded', function () {
     chrome.runtime.sendMessage("popupOpened");
   }
 
+  var eqContainer = document.querySelector(".EqContainer");
   var mono = false;
 
   updateSliders = function(sliderValue, sliderId){
@@ -20,6 +21,8 @@ document.addEventListener('DOMContentLoaded', function () {
     chrome.runtime.sendMessage({type: "gain", value: gainValue});
   }
   updatePower = function(powerValue){
+    eqContainer.style.opacity = (powerValue)? 1:0.5;
+    eqContainer.style.pointerEvents = (powerValue)? "auto":"none";
     chrome.runtime.sendMessage({type: "power", value: powerValue});
   }
 
@@ -41,6 +44,8 @@ document.addEventListener('DOMContentLoaded', function () {
       document.getElementById('gain').value = element.value;
     }
     if(element.type == "powerValue"){
+      eqContainer.style.opacity = (element.value)? 1:0.5;
+      eqContainer.style.pointerEvents = (element.value)? "auto":"none";
       document.getElementById('onOff').checked = element.value;
     }
   });
