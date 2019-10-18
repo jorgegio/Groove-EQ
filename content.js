@@ -4,6 +4,7 @@ document.addEventListener('DOMContentLoaded', function () {
   }
 
   var eqContainer = document.querySelector(".EqContainer");
+  var monoSwitch = document.querySelector(".monoswitch");
   var mono = false;
 
   updateSliders = function(sliderValue, sliderId){
@@ -25,6 +26,8 @@ document.addEventListener('DOMContentLoaded', function () {
   updatePower = function(powerValue){
     eqContainer.style.opacity = (powerValue)? 1:0.5;
     eqContainer.style.pointerEvents = (powerValue)? "auto":"none";
+    monoSwitch.style.opacity = (powerValue)? 1:0.5;
+    monoSwitch.style.pointerEvents = (powerValue)? "auto":"none";
     chrome.runtime.sendMessage({type: "power", value: powerValue});
   }
 
@@ -48,6 +51,8 @@ document.addEventListener('DOMContentLoaded', function () {
     if(element.type == "powerValue"){
       eqContainer.style.opacity = (element.value)? 1:0.5;
       eqContainer.style.pointerEvents = (element.value)? "auto":"none";
+      monoSwitch.style.opacity = (element.value)? 1:0.5;
+      monoSwitch.style.pointerEvents = (element.value)? "auto":"none";
       document.getElementById('onOff').checked = element.value;
     }
   });
