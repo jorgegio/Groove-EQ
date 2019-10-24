@@ -1,7 +1,7 @@
 {
   "manifest_version": 2,
   "name": "ChromeAudioEQ",
-  "version": "1.0",
+  "version": "1.0.1",
   "description": "Equalize audio, adjust volume, and toggle between mono and stereo within your browser!",
   "permissions": [
     "tabCapture"
