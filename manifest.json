@@ -6,6 +6,12 @@
   "permissions": [
     "tabCapture"
   ],
+  "icons": {
+    "16": "logo/logo16.png",
+    "32": "logo/logo32.png",
+    "64": "logo/logo64.png",
+    "128": "logo/logo128.png"
+  },
   "content_scripts": [
     {
       "matches": [
