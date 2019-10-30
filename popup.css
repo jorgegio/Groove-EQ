@@ -1,8 +1,6 @@
-@import url('https://fonts.googleapis.com/css?family=Roboto');
-
 body{
   width: 480px;
-  height: 100px;
+  height: 90px;
   flex-direction: column;
   align-items: center;
   font-family: "Roboto", sans-serif;
@@ -12,14 +10,13 @@ body{
 .EqSliderList{
 display: flex;
 flex-direction: row;
-width: 360px;
+width: 100%;
 height: 100px;
 user-select: none;
 padding-bottom: 5%;
 }
 
 .band{
-/* -webkit-appearance: slider-vertical; */
 height: 100px;
 width: 21px;
 border-radius: 3px;
