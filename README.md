@@ -11,8 +11,6 @@ The extension consists of:
 * Audio gain settings - up to 3x regular volume
 * Toggling between stereo and mono
 
-![ChromeAudioEQ UI](https://github.com/JorgeGiovannetti/jorgegiovannetti.github.io/blob/master/img/projects/ChromeEq.jpg)
-
 ## Download
 
 Get it from the Chrome Web Store: [ChromeAudioEQ](https://chrome.google.com/webstore/detail/chromeaudioeq/ekbpkpogdfpoaehbngjhfololhjndbdn)
