@@ -188,7 +188,6 @@ chrome.tabCapture.onStatusChanged.addListener(e => {
 				lastWindowState = t.state;
 			}
 			if (e.fullscreen) {
-				console.log("switch to fullscreen");
 				chrome.windows.update(
 					chrome.windows.WINDOW_ID_CURRENT,
 					{
@@ -197,7 +196,6 @@ chrome.tabCapture.onStatusChanged.addListener(e => {
 					null
 				);
 			} else {
-				console.log("switch to " + t.id || "fullscreen");
 				chrome.windows.update(
 					chrome.windows.WINDOW_ID_CURRENT,
 					{
