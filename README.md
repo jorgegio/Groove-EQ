@@ -13,7 +13,7 @@ The extension consists of:
 
 ## Download
 
-Get it from the Chrome Web Store: [Groove EQ](https://chrome.google.com/webstore/detail/chromeaudioeq/ekbpkpogdfpoaehbngjhfololhjndbdn)
+Get it from the Chrome Web Store: [Groove EQ](https://chrome.google.com/webstore/detail/groove-eq/ekbpkpogdfpoaehbngjhfololhjndbdn)
 
 ## Permissions
 
