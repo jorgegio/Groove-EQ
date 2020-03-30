@@ -173,7 +173,7 @@ chrome.runtime.onMessage.addListener(function(element) {
 				case "gain":
 					gain = element.value;
 					cTabObj.gainNode.gain.setValueAtTime(
-						(element.value / 4) * element.value,
+						(element.value / 3) * element.value,
 						cTabObj.audioCtx.currentTime
 					);
 					break;
