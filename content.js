@@ -99,7 +99,6 @@ document.addEventListener(
 			updateMono();
 			document.getElementById("onOff").checked = true;
 			updatePower(true);
-			chrome.runtime.sendMessage("reset");
 		};
 
 		//Mono toggle
