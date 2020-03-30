@@ -1,4 +1,4 @@
-# ChromeAudioEQ
+# Groove EQ
 Chrome extension that allows you to equalize audio within the browser.
 
 Using WebAudio API and native javascript through Chrome's extension library.
@@ -13,7 +13,7 @@ The extension consists of:
 
 ## Download
 
-Get it from the Chrome Web Store: [ChromeAudioEQ](https://chrome.google.com/webstore/detail/chromeaudioeq/ekbpkpogdfpoaehbngjhfololhjndbdn)
+Get it from the Chrome Web Store: [Groove EQ](https://chrome.google.com/webstore/detail/groove-eq/ekbpkpogdfpoaehbngjhfololhjndbdn)
 
 ## Permissions
 
