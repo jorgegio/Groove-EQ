@@ -150,9 +150,6 @@ chrome.runtime.onMessage.addListener(function(element) {
 		chrome.runtime.sendMessage({ type: "gainValue", value: gain });
 		chrome.runtime.sendMessage({ type: "powerValue", value: power });
 	}
-	if (element == "reset") {
-		closeAudio();
-	}
 	if (element.type) {
 		let bandId = parseInt(element.type.substr(4), 10) - 1;
 		if (element.type.substr(0, 4) == "band") {
@@ -172,10 +169,12 @@ chrome.runtime.onMessage.addListener(function(element) {
 					break;
 				case "gain":
 					gain = element.value;
-					cTabObj.gainNode.gain.setValueAtTime(
-						(element.value / 3) * element.value,
-						cTabObj.audioCtx.currentTime
-					);
+					if (isFinite(gain)) {
+						cTabObj.gainNode.gain.setValueAtTime(
+							(gain * gain) / 3,
+							cTabObj.audioCtx.currentTime
+						);
+					}
 					break;
 				case "mono":
 					mono = element.value;
