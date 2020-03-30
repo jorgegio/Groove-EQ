@@ -1,7 +1,7 @@
 {
 	"manifest_version": 2,
 	"name": "Groove EQ",
-	"version": "1.0.2",
+	"version": "1.0.3",
 	"description": "Equalize audio, adjust volume, and toggle between mono and stereo within your browser!",
 	"permissions": ["tabCapture"],
 	"icons": {
@@ -12,7 +12,7 @@
 	},
 	"content_scripts": [
 		{
-			"matches": ["<all_urls>"],
+			"matches": ["https://*/*", "http://*/*"],
 			"js": ["content.js"]
 		}
 	],
