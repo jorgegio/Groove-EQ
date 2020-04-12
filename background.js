@@ -11,17 +11,18 @@ var frequencies = [
 	3000,
 	5000,
 	9000,
-	16000
+	16000,
 ];
 var cTabObj = {};
 var power = true;
 var mono = false;
 var gain = 1;
 
-lastWindowState = "maximized";
+var windowState;
+var fullScreen;
 
 //Initializes biquads with filter type and frequencies
-initBandBiquads = function() {
+initBandBiquads = function () {
 	cTabObj.audioCtx.latencyHint = "playback";
 	cTabObj.bands[0].type = "lowshelf";
 	cTabObj.bands[0].frequency.setValueAtTime(
@@ -43,11 +44,11 @@ initBandBiquads = function() {
 	cTabObj.gainNode.gain.setValueAtTime(1, cTabObj.audioCtx.currentTime);
 };
 
-getTabStream = function() {
+getTabStream = function () {
 	//Close audiostream if it already exists
 	closeAudio();
 	//Gets audiostream from tab
-	chrome.tabCapture.capture({ audio: true, video: false }, c => {
+	chrome.tabCapture.capture({ audio: true, video: false }, (c) => {
 		if (chrome.runtime.lastError) {
 		}
 		if (c) {
@@ -67,7 +68,7 @@ getTabStream = function() {
 };
 
 //Creates audio context and biquads
-createAudio = function(a) {
+createAudio = function (a) {
 	cTabObj.stream = a;
 	cTabObj.audioCtx = new AudioContext();
 	cTabObj.streamOutput = cTabObj.audioCtx.createMediaStreamSource(
@@ -84,7 +85,7 @@ createAudio = function(a) {
 };
 
 //Connects biquads to output stream
-connect = function() {
+connect = function () {
 	cTabObj.streamOutput.connect(cTabObj.bands[0]);
 	for (let i = 1; i < 12; i++) {
 		cTabObj.bands[i - 1].connect(cTabObj.bands[i]);
@@ -93,7 +94,7 @@ connect = function() {
 	cTabObj.gainNode.connect(cTabObj.audioCtx.destination);
 };
 
-monoConnect = function() {
+monoConnect = function () {
 	if (mono) {
 		cTabObj.bands[11].disconnect();
 		cTabObj.bands[11].connect(cTabObj.monoSplitter);
@@ -107,7 +108,7 @@ monoConnect = function() {
 	}
 };
 
-closeAudio = function() {
+closeAudio = function () {
 	if (cTabObj.stream) {
 		cTabObj.stream.getAudioTracks()[0].stop();
 		cTabObj.audioCtx.close();
@@ -115,34 +116,26 @@ closeAudio = function() {
 	}
 };
 
-chrome.tabCapture.onStatusChanged.addListener(e => {
-	if (e.status == "active" && e.tabId) {
-		chrome.windows.get(chrome.windows.WINDOW_ID_CURRENT, null, function(t) {
-			if (t.state != "fullscreen") {
-				lastWindowState = t.state;
-			}
-			if (e.fullscreen) {
-				chrome.windows.update(
-					chrome.windows.WINDOW_ID_CURRENT,
-					{
-						state: "fullscreen"
-					},
-					null
-				);
+chrome.tabCapture.onStatusChanged.addListener((b) => {
+	fullscreen = true;
+	if (b.status == "active" && b.tabId) {
+		chrome.windows.getCurrent(function (a) {
+			var c = a.id;
+			if (false !== fullscreen) {
+				if (true === b.fullscreen) {
+					windowState = a.state;
+					chrome.windows.update(c, { state: "fullscreen" }, null);
+				} else {
+					chrome.windows.update(c, { state: windowState }, null);
+				}
 			} else {
-				chrome.windows.update(
-					chrome.windows.WINDOW_ID_CURRENT,
-					{
-						state: lastWindowState || "fullscreen"
-					},
-					null
-				);
+				chrome.windows.update(c, { state: a.state }, null);
 			}
 		});
 	}
 });
 
-chrome.runtime.onMessage.addListener(function(element) {
+chrome.runtime.onMessage.addListener(function (element) {
 	if (element == "popupOpened") {
 		power ? getTabStream() : closeAudio();
 		chrome.runtime.sendMessage({ type: "bandValues", value: eq });
